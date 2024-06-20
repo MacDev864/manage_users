@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons mdi mdi-home-outline",
+      "slug": "cards-basic",
+      "url": "/"
+    },
+    {
+      "name": "My vehicle",
+      "icon": "menu-icon tf-icons mdi mdi mdi-car",
+      "slug": "cards-basic",
+      "url": "/vehicle"
+    }
+  ]
+}
