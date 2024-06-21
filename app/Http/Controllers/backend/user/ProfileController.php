@@ -17,6 +17,10 @@ use palPalani\Toastr\Facades\Toastr;
 
 class ProfileController extends Controller
 {
+  public function __construct(Request $req)
+  {
+      $this->body = $req->all();
+  }
   function getProfileById($id)
   {
     try {
@@ -29,19 +33,18 @@ class ProfileController extends Controller
       throw $th;
     }
   }
-  function create(Request $req)
+  function create()
   {
     try {
       $user = Auth::user();
-      $body = $req->all();
       $company_id = $user->company_id;
-      $body['id'] = Repocontroller::getNewId();
-      $body['user_id'] = $user->id;
-      $body['company_id'] = $company_id;
+      $this->body['id'] = Repocontroller::getNewId();
+      $this->body['user_id'] = $user->id;
+      $this->body['company_id'] = $company_id;
 
-      $password = RepoController::random_int(6);
-      $body['password'] = $password;
-      $validatorregister = Validators::validator($body, [
+      $password = $this->body['username'];
+      $this->body['password'] = $password;
+      $validatorregister = Validators::validator($this->body, [
         'name' => 'required|regex:/^[a-zA-Z0-9._]+$/',
         'lastname' => 'required|regex:/^[a-zA-Z0-9._]+$/',
         'username' => 'required|regex:/^[a-zA-Z0-9._]+$/',
@@ -50,27 +53,42 @@ class ProfileController extends Controller
       if ($validatorregister['success'] == false) {
         return JsonResult::errors($validatorregister['data'], $validatorregister['message']);
       }
-      $result = ProfileService::create($body);
+      $result = ProfileService::create($this->body);
       if ($result['success'] == false) {
         return JsonResult::errors(null, $result['message']);
       }
-      return JsonResult::success($body, $result['message']);
+      return JsonResult::success($this->body, $result['message']);
     } catch (\Throwable $th) {
       throw $th;
     }
   }
-  function update(Request $req)
+  function update()
   {
     try {
       $user = Auth::user();
       $company_id = $user->company_id;
+      $this->body['user_id'] = $user->id;
+      $this->body['company_id'] = $company_id;
 
-      return JsonResult::success();
+      $validatorregister = Validators::validator($this->body, [
+        'name' => 'required|regex:/^[a-zA-Z0-9._]+$/',
+        'lastname' => 'required|regex:/^[a-zA-Z0-9._]+$/',
+        'username' => 'required|regex:/^[a-zA-Z0-9._]+$/',
+        'email' => 'required|email',
+      ]);
+      if ($validatorregister['success'] == false) {
+        return JsonResult::errors($validatorregister['data'], $validatorregister['message']);
+      }
+      $result = ProfileService::update($this->body);
+      if ($result['success'] == false) {
+        return JsonResult::errors(null, $result['message']);
+      }
+      return JsonResult::success($this->body);
     } catch (\Throwable $th) {
       throw $th;
     }
   }
-  function delete(Request $req)
+  function delete()
   {
     try {
       $user = Auth::user();

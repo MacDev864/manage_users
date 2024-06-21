@@ -66,14 +66,20 @@ $(document).ready(function () {
       }
     });
   }
-  function upate(frmValue, url, type) {
+  function update(frmValue, url, type) {
     $.ajax({
       type: type,
       url: url,
       data: frmValue,
       dataType: 'json',
       success: function (response) {
-        console.log(response.success);
+        if (response.success == false) {
+          toastr.warning(response.message); // Show su
+        }
+        if (response.success == true) {
+          toastr.success(response.message); // Show su
+          window.location = '/';
+        }
       }
     });
   }
