@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-        
+
 
 
 
@@ -65,27 +65,6 @@
     </div>
   </div>
 </div>
-<script>
-   $(document).ready(function () {
+<script src="{{ asset('assets/js-external/account-setting.js') }}"></script>
 
-    $('#status').on('click', function (event) {
-      let status = document.getElementById('status').checked == true ? true : false;
-      $.ajax({
-        type: "POST",
-        url: "/backend/change_status",
-        data: {
-          is_active:status
-        },
-        dataType: "json",
-        success: function (response) {
-          // /backend/change_status
-          if (response.success) {
-            window.location = '/pages/account-settings-connections';
-
-          }
-        }
-      });
-    });
-   });
-</script>
 @endsection

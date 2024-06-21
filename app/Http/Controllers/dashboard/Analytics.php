@@ -14,7 +14,8 @@ class Analytics extends Controller
   {
     $page = 'content.dashboard.dashboards-admin';
     $user = Auth::user();
-    $users = AuthService::getAll()->toArray();
+    $company_id = $user->company_id;
+    $users = AuthService::getUserById($company_id)->toArray();
     $user->name = Repocontroller::strTouppercase($user->name);
     $user->lastname = Repocontroller::strTouppercase($user->lastname);
     $data = [
@@ -41,6 +42,8 @@ class Analytics extends Controller
     $page = 'content.dashboard.dashboards-user';
     $user = Auth::user();
     $users = AuthService::getAll()->toArray();
+    $user->name = Repocontroller::strTouppercase($user->name);
+    $user->lastname = Repocontroller::strTouppercase($user->lastname);
     $data = [
       'class_status' => $user->is_active ? 'text-success' : 'text-danger',
       'status' => $user->is_active ? 'online' : 'offline',
@@ -57,8 +60,8 @@ class Analytics extends Controller
   {
     $page = 'content.dashboard.dashboards-user';
     $user = Auth::user();
-
-    $users = AuthService::getProfileById($id);
+    $company_id = $user->company_id;
+    $users = AuthService::getProfileById($id,$company_id);
     if (is_null($users) || $user->isUser()) {
       $page = 'content.pages.pages-misc-error';
       return view($page);

@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class AuthModel
+class CompanyModel
 {
-  private const TABLE = 'users';
+  private const TABLE = 'company';
 
   private const PK = 'id';
 
@@ -25,22 +25,7 @@ class AuthModel
       ->where('is_deleted', 0)
       ->get();
   }
-  public static function getProfileById($id, $company_id)
-  {
-    return DB::table(self::TABLE)
-      ->where(self::PK, $id)
-      ->where('company_id', $company_id)
-      ->first();
-  }
-  public static function getUserById($company_id)
-  {
-    return DB::table(self::TABLE)
-      ->where('is_deleted', 0)
-      ->where('company_id', $company_id)
-      ->whereIn('user_level', [1, 2, 3])
-      ->get();
-  }
-  //
+
   public static function create($data)
   {
     return DB::table(self::TABLE)->insert($data);

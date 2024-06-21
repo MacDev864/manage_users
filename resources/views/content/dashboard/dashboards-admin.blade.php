@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Dashboard - Analytics')
+@section('title', 'Dashboard')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}">
@@ -15,16 +15,23 @@
 @endsection
 
 @section('content')
+
+
 <div class="row gy-4">
+<div class="col-xl-12">
+    <div class="card h-100">
+      <div class="card-body row g-2">
+        <div class="d-flex justify-content-between mb-3">
+            <button type="button" class="btn btn-outline-danger btn-add" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="mdi mdi-plus mr-1"></i> เพิ่มข้อมูล</button>
+              <div class="">
+                <span class="a-pointer font-size-12 btn-refresh" >
+                  <i class="mdi mdi-sync pr-1"></i>รีเฟรชข้อมูล
+                </span>
+              </div>
+              @include('layouts/sections/modals/modaluser')
 
-  <!--/ Congratulations card -->
-
-  <!-- Transactions -->
-
-  <!-- Deposit / Withdraw -->
-
-  <!-- Data Tables -->
-  <div class="col-12">
+        </div>
+    <div class="col-12">
     <div class="card">
       <div class="table-responsive">
         <table class="table">
@@ -33,8 +40,6 @@
               <th class="text-truncate">User</th>
               <th class="text-truncate">Email</th>
               <th class="text-truncate">Role</th>
-              <!-- <th class="text-truncate">Age</th>
-              <th class="text-truncate">Salary</th> -->
               <th class="text-truncate">Status</th>
               <th class="text-truncate">tool</th>
             </tr>
@@ -70,8 +75,8 @@
               @endif
 
               <td>
-                <button type="button" class="btn btn-sm btn-view btn-outline-info" data-id="{{ $value->id }}" ><i class="mdi mdi-eye-circle"></i></button>
-                <button type="button" class="btn btn-sm btn-edit btn-outline-warning" data-id="{{ $value->id }}"   ><i class="mdi mdi-pencil"></i></button>
+                <button type="button" class="btn btn-sm btn-view btn-outline-info" data-id="{{ $value->id }}"  ><i class="mdi mdi-eye-circle"></i></button>
+                <button type="button" class="btn btn-sm btn-edit btn-outline-warning" data-id="{{ $value->id }}" data-bs-toggle="modal" data-bs-target="#basicModal"   ><i class="mdi mdi-pencil"></i></button>
                 <button type="button" class="btn btn-sm btn-delete btn-outline-danger" data-id="{{ $value->id }}" ><i class="mdi mdi-delete"></i></button>
               </td>
 
@@ -84,22 +89,14 @@
       </div>
     </div>
   </div>
-  <!--/ Data Tables -->
+      </div>
+    </div>
+  </div>
 </div>
 <script>
-  $(document).ready(function () {
 
-    $('.btn-view').off().on('click', function (event) {
-      let id = $(this).data("id");
-      console.log(id);
-      window.location = '/profile/'+id;
-    });
-  //   $('.btn-edit').on('click', function (event) {
-
-  //   });
-  // $('.btn-delete').on('click', function (event) {
-
-  // });
-  });
 </script>
+<script src="{{ asset('assets/js-external/dashboard-admin.js') }}"></script>
+
+
 @endsection

@@ -25,6 +25,7 @@
 
 <!-- Include Toastr JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
   <!-- Include Styles -->
   @include('layouts/sections/styles')

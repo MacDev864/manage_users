@@ -64,4 +64,15 @@ class Repocontroller
       throw $th;
     }
   }
+  public static function random_int($string_length = 6)
+  {
+    $random_string = '';
+    $random_characters = array_merge(range('0', '9'));
+    $max = count($random_characters) - 1;
+    for ($i = 0; $i < $string_length; $i++) {
+      $rand = mt_rand(0, $max);
+      $random_string .= $random_characters[$rand];
+    }
+    return $random_string;
+  }
 }

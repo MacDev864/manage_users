@@ -6,6 +6,7 @@ use App\Helpers\JsonResult;
 use App\Helpers\sms;
 use App\Http\Controllers\backend\helpers\Repocontroller;
 use App\Models\AuthModel;
+use App\Models\CompanyModel;
 use App\Models\ProfileModel;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ class AuthService
 
       $user_uuid = Repocontroller::getNewId();
 
+      $company_uuid = Repocontroller::getNewId();
       $data = [
         'id' => $user_uuid,
         'email' => $body['email'],
@@ -39,13 +41,26 @@ class AuthService
         'password' => Hash::make($body['password']),
         'name' => $body['name'],
         'lastname' => $body['lastname'],
-        'user_level' => 3,
+        'company_id' => $company_uuid,
+        'user_level' => 0,
         'is_deleted' => 0,
         'created_at' => now(),
         'created_by' => $user_uuid,
         'is_verify' => 1,
+        'is_active' => 0,
       ];
       $rsCreateUser = AuthModel::create($data);
+      DB::commit();
+
+      $data = [
+        'id' => $company_uuid,
+        'owner_id' => $user_uuid,
+        'is_deleted' => 0,
+        'created_at' => now(),
+        'created_by' => $user_uuid,
+        'helper' => 1,
+      ];
+      $rsCreateCompany = CompanyModel::create($data);
       DB::commit();
 
       if ($rsCreateUser == false) {
@@ -55,13 +70,27 @@ class AuthService
         $result['result'] = $rsCreateUser;
         return $result;
       }
-
+      if ($rsCreateCompany == false) {
+        DB::rollBack();
+        $result['message'] = 'ลงทะเบียนโปรไฟล์ผู้ใช้งานไม่สำเร็จ';
+        $result['success'] = false;
+        $result['result'] = $rsCreateUser;
+        return $result;
+      }
       $result['data'] = $data;
       $result['message'] = 'ลงทะเบียนใช้งานสำเร็จ';
       $result['message_ex'] = '';
       $result['success'] = true;
 
       return $result;
+    } catch (\Throwable $th) {
+      throw $th;
+    }
+  }
+  public static function getUserById($company_id)
+  {
+    try {
+      return AuthModel::getUserById($company_id);
     } catch (\Throwable $th) {
       throw $th;
     }
@@ -74,10 +103,10 @@ class AuthService
       throw $th;
     }
   }
-  public static function getProfileById($id)
+  public static function getProfileById($id, $company_id)
   {
     try {
-      return AuthModel::getProfileById($id);
+      return AuthModel::getProfileById($id, $company_id);
     } catch (\Throwable $th) {
       throw $th;
     }

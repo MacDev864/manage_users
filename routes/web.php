@@ -57,11 +57,15 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/pages/account-settings-connections', [NavigetionAccountSetting::class, 'settingsConnections'])->name(
     'pages-account-settings-connections'
   );
+  Route::get('/vehicle', function () {
+    return view('content.pages.pages-misc-under-maintenance');
+  });
 });
 // authentication
 Route::get('/auth/login', [NavigationAuthController::class, 'login'])->name('login');
 Route::get('/auth/register', [NavigationAuthController::class, 'register'])->name('auth-register');
 Route::get('/auth/forgot-password', [NavigationAuthController::class, 'forgotpassword'])->name('auth-reset-password');
+Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
 
 // Main Page Route
 
@@ -90,7 +94,6 @@ Route::get('/auth/forgot-password', [NavigationAuthController::class, 'forgotpas
 // Route::get('/ui/dropdowns', [Dropdowns::class, 'index'])->name('ui-dropdowns');
 // Route::get('/ui/footer', [Footer::class, 'index'])->name('ui-footer');
 // Route::get('/ui/list-groups', [ListGroups::class, 'index'])->name('ui-list-groups');
-// Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
 // Route::get('/ui/navbar', [Navbar::class, 'index'])->name('ui-navbar');
 // Route::get('/ui/offcanvas', [Offcanvas::class, 'index'])->name('ui-offcanvas');
 // Route::get('/ui/pagination-breadcrumbs', [PaginationBreadcrumbs::class, 'index'])->name('ui-pagination-breadcrumbs');
