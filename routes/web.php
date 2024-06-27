@@ -21,7 +21,8 @@ use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
-use App\Http\Controllers\pages\NavigetionAccountSetting;
+use App\Http\Controllers\pages\NavigationAccountSetting;
+use App\Http\Controllers\pages\NavigationGameController;
 use App\Http\Controllers\user_interface\Accordion;
 use App\Http\Controllers\user_interface\Alerts;
 use App\Http\Controllers\user_interface\Badges;
@@ -42,24 +43,30 @@ use App\Http\Controllers\user_interface\Toasts;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\user_interface\Typography;
 
+
+
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/', [Analytics::class, 'index'])->name('dashboard-main');
   Route::get('/profile', [Analytics::class, 'profile'])->name('dashboard-main');
   Route::get('/profile/{id}', [Analytics::class, 'profileById'])->name('dashboard-main');
 
   // pages
-  Route::get('/pages/account-settings-account', [NavigetionAccountSetting::class, 'settingsAccount'])->name(
+  Route::get('/pages/account-settings-account', [NavigationAccountSetting::class, 'settingsAccount'])->name(
     'pages-account-settings-account'
   );
-  Route::get('/pages/account-settings-notifications', [NavigetionAccountSetting::class, 'settingsNotifications'])->name(
+  Route::get('/pages/account-settings-notifications', [NavigationAccountSetting::class, 'settingsNotifications'])->name(
     'pages-account-settings-notifications'
   );
-  Route::get('/pages/account-settings-connections', [NavigetionAccountSetting::class, 'settingsConnections'])->name(
+  Route::get('/pages/account-settings-connections', [NavigationAccountSetting::class, 'settingsConnections'])->name(
     'pages-account-settings-connections'
   );
   Route::get('/vehicle', function () {
     return view('content.pages.pages-misc-under-maintenance');
   });
+  Route::get('/game/xo', [NavigationGameController::class, 'index'])->name(
+    'submit-game-settings'
+  );
+
 });
 // authentication
 Route::get('/auth/login', [NavigationAuthController::class, 'login'])->name('login');

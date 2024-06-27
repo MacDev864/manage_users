@@ -8,7 +8,7 @@ use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class NavigetionAccountSetting extends Controller
+class NavigationAccountSetting extends Controller
 {
   public function settingsNotifications()
   {

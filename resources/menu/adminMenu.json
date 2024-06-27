@@ -6,11 +6,12 @@
       "slug": "cards-basic",
       "url": "/"
     },
+   
     {
-      "name": "My vehicle",
-      "icon": "menu-icon tf-icons mdi mdi mdi-car",
+      "name": "XO Game",
+      "icon": "menu-icon tf-icons mdi mdi-controller-classic",
       "slug": "cards-basic",
-      "url": "/vehicle"
+      "url": "/game/xo"
     }
   ]
 }

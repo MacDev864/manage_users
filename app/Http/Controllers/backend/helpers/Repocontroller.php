@@ -8,6 +8,14 @@ use Ramsey\Uuid\Rfc4122\UuidV4;
 
 class Repocontroller
 {
+  public static function createArray($length,$string)
+  {
+    $array = [];
+    for ($i = 0; $i < $length; $i++) { 
+      $array[] = $string;
+    }
+    return $array;
+  }
   public static function checkUsernameEmail($input)
   {
     $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
