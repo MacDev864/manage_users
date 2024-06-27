@@ -25,10 +25,10 @@ class Analytics extends Controller
       'role' => $user->chkRole(),
       'users' => $users,
       'date' => date('d/m/Y H:i:s'),
-      'page_name' => 'Main',
+      'page_name' => 'หน้าหลัก',
       'full_name' => $user->name . ' ' . $user->lastname,
     ];
-    if ($user->isUser()) {
+    if ($user->isUser() || $user->isSubAdmin()) {
       $page = 'content.dashboard.dashboards-user';
     }
     // $rs['data']['isSuperAdmin'] = $credential_user->isSuperAdmin();
@@ -61,7 +61,7 @@ class Analytics extends Controller
     $page = 'content.dashboard.dashboards-user';
     $user = Auth::user();
     $company_id = $user->company_id;
-    $users = AuthService::getProfileById($id,$company_id);
+    $users = AuthService::getProfileById($id, $company_id);
     if (is_null($users) || $user->isUser()) {
       $page = 'content.pages.pages-misc-error';
       return view($page);

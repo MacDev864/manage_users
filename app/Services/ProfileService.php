@@ -63,8 +63,8 @@ class ProfileService
       throw $th;
     }
   }
-  public static function update($body)  {
-
+  public static function update($body)
+  {
     try {
       DB::beginTransaction();
       $data = [
@@ -78,15 +78,14 @@ class ProfileService
         'updated_at' => now(),
         'updated_by' => $body['user_id'],
         'is_verify' => 1,
-        'is_active' => 0,
       ];
-      $rsUpdateUser = AuthModel::update($body['id'],$data);
+      $rsUpdateUser = AuthModel::update($body['id'], $data);
       DB::commit();
       if ($rsUpdateUser == false) {
         DB::rollBack();
         $result['message'] = 'ลงทะเบียนโปรไฟล์ผู้ใช้งานไม่สำเร็จ';
         $result['success'] = false;
-        $result['result'] = $rsCreateUser;
+        $result['result'] = $rsUpdateUser;
         return $result;
       }
       $result['data'] = $data;
@@ -99,11 +98,28 @@ class ProfileService
       throw $th;
     }
   }
-  public static function delete()  {
-
+  public static function delete($body)
+  {
     try {
       DB::beginTransaction();
+      $data = [
+        'is_deleted' => 1,
+      ];
+      $rsUpdateUser = AuthModel::update($body['id'], $data);
       DB::commit();
+      if ($rsUpdateUser == false) {
+        DB::rollBack();
+        $result['message'] = 'ลงทะเบียนโปรไฟล์ผู้ใช้งานไม่สำเร็จ';
+        $result['success'] = false;
+        $result['result'] = $rsUpdateUser;
+        return $result;
+      }
+      $result['data'] = $data;
+      $result['message'] = 'ลงทะเบียนใช้งานสำเร็จ';
+      $result['message_ex'] = '';
+      $result['success'] = true;
+
+      return $result;
     } catch (\Throwable $th) {
       throw $th;
     }

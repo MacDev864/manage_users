@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="{{ asset(mix('assets/vendor/css/core.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('assets/vendor/css/theme-default.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('assets/css/demo.css')) }}" />
+<!-- toastr -->
 <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" /> -->
+<!-- DataTables CSS -->
 
-<!-- Vendors CSS -->
-<link rel="stylesheet" href="{{ asset(mix('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')) }}" />
 
 <!-- Vendor Styles -->
 @yield('vendor-style')

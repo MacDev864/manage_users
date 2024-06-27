@@ -85,10 +85,15 @@ class User extends Authenticatable implements JWTSubject
   public function isSuperAdmin()
   {
     // แอดมิน
-    return $this->user_level == '1' ? true : false;
+    return $this->user_level == '0' ? true : false;
   }
 
   public function isAdmin()
+  {
+    // แอดมิน
+    return $this->user_level == '1' ? true : false;
+  }
+  public function isSubAdmin()
   {
     // แอดมิน
     return $this->user_level == '2' ? true : false;

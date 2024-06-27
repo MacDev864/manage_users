@@ -60,25 +60,19 @@
 // 			pos: 'top-right'
 // 		});
 // 	},
-// }
+// } 
+
 
 // var msg = function(data){
 // 	console.log(data)
 // }
 
 toastr.options = {
-  closeButton: true,
-  debug: false,
-  newestOnTop: false,
-  progressBar: false,
-  positionClass: 'toast-top-right',
-  preventDuplicates: false,
-  showDuration: '1000',
-  hideDuration: '1000',
-  timeOut: '5000',
-  extendedTimeOut: '1000',
-  showEasing: 'swing',
-  hideEasing: 'linear',
-  showMethod: 'fadeIn',
-  hideMethod: 'fadeOut'
+	positionClass: "toast-top-right",
+	timeOut: 3000,
+	progressBar: true,
+	showMethod: "slideDown",
+	hideMethod: "slideUp",
+	showDuration: 200,
+	hideDuration: 200
 };

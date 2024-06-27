@@ -1,159 +1,281 @@
+/* global Chart, coreui */
+
 /**
- * Main
+ * --------------------------------------------------------------------------
+ * CoreUI Boostrap Admin Template (v4.2.2): main.js
+ * Licensed under MIT (https://coreui.io/license)
+ * --------------------------------------------------------------------------
  */
 
-'use strict';
+// Disable the on-canvas tooltip
+Chart.defaults.pointHitDetectionRadius = 1;
+Chart.defaults.plugins.tooltip.enabled = false;
+Chart.defaults.plugins.tooltip.mode = 'index';
+Chart.defaults.plugins.tooltip.position = 'nearest';
+Chart.defaults.plugins.tooltip.external = coreui.ChartJS.customTooltips;
+Chart.defaults.defaultFontColor = '#646470';
+const random = (min, max) =>
+// eslint-disable-next-line no-mixed-operators
+Math.floor(Math.random() * (max - min + 1) + min);
 
-let menu, animate;
-
-(function () {
-  // Button & Pagination Waves effect
-  if (typeof Waves !== 'undefined') {
-    Waves.init();
-    Waves.attach(
-      ".btn[class*='btn-']:not(.position-relative):not([class*='btn-outline-']):not([class*='btn-label-'])",
-      ['waves-light']
-    );
-    Waves.attach("[class*='btn-outline-']:not(.position-relative)");
-    Waves.attach('.pagination .page-item .page-link');
-    Waves.attach('.dropdown-menu .dropdown-item');
-    Waves.attach('.light-style .list-group .list-group-item-action');
-    Waves.attach('.dark-style .list-group .list-group-item-action', ['waves-light']);
-    Waves.attach('.nav-tabs:not(.nav-tabs-widget) .nav-item .nav-link');
-    Waves.attach('.nav-pills .nav-item .nav-link', ['waves-light']);
-    Waves.attach('.menu-vertical .menu-item .menu-link.menu-toggle');
-  }
-
-  // Window scroll function for navbar
-  function onScroll() {
-    var layoutPage = document.querySelector('.layout-page');
-    if (layoutPage) {
-      if (window.pageYOffset > 0) {
-        layoutPage.classList.add('window-scrolled');
-      } else {
-        layoutPage.classList.remove('window-scrolled');
+// eslint-disable-next-line no-unused-vars
+const cardChart1 = new Chart(document.getElementById('card-chart1'), {
+  type: 'line',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(255,255,255,.55)',
+      pointBackgroundColor: coreui.Utils.getStyle('--cui-primary'),
+      data: [65, 59, 84, 84, 51, 55, 40]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          display: false
+        }
+      },
+      y: {
+        min: 30,
+        max: 89,
+        display: false,
+        grid: {
+          display: false
+        },
+        ticks: {
+          display: false
+        }
+      }
+    },
+    elements: {
+      line: {
+        borderWidth: 1,
+        tension: 0.4
+      },
+      point: {
+        radius: 4,
+        hitRadius: 10,
+        hoverRadius: 4
       }
     }
   }
-  // On load time out
-  setTimeout(() => {
-    onScroll();
-  }, 200);
+});
 
-  // On window scroll
-  window.onscroll = function () {
-    onScroll();
-  };
-
-  // Initialize menu
-  //-----------------
-
-  let layoutMenuEl = document.querySelectorAll('#layout-menu');
-  layoutMenuEl.forEach(function (element) {
-    menu = new Menu(element, {
-      orientation: 'vertical',
-      closeChildren: false
-    });
-    // Change parameter to true if you want scroll animation
-    window.Helpers.scrollToActive((animate = false));
-    window.Helpers.mainMenu = menu;
-  });
-
-  // Initialize menu togglers and bind click on each
-  let menuToggler = document.querySelectorAll('.layout-menu-toggle');
-  menuToggler.forEach(item => {
-    item.addEventListener('click', event => {
-      event.preventDefault();
-      window.Helpers.toggleCollapsed();
-    });
-  });
-
-  // Display menu toggle (layout-menu-toggle) on hover with delay
-  let delay = function (elem, callback) {
-    let timeout = null;
-    elem.onmouseenter = function () {
-      // Set timeout to be a timer which will invoke callback after 300ms (not for small screen)
-      if (!Helpers.isSmallScreen()) {
-        timeout = setTimeout(callback, 300);
-      } else {
-        timeout = setTimeout(callback, 0);
+// eslint-disable-next-line no-unused-vars
+const cardChart2 = new Chart(document.getElementById('card-chart2'), {
+  type: 'line',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(255,255,255,.55)',
+      pointBackgroundColor: coreui.Utils.getStyle('--cui-info'),
+      data: [1, 18, 9, 17, 34, 22, 11]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false
       }
-    };
-
-    elem.onmouseleave = function () {
-      // Clear any timers set to timeout
-      document.querySelector('.layout-menu-toggle').classList.remove('d-block');
-      clearTimeout(timeout);
-    };
-  };
-  if (document.getElementById('layout-menu')) {
-    delay(document.getElementById('layout-menu'), function () {
-      // not for small screen
-      if (!Helpers.isSmallScreen()) {
-        document.querySelector('.layout-menu-toggle').classList.add('d-block');
+    },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          display: false
+        }
+      },
+      y: {
+        min: -9,
+        max: 39,
+        display: false,
+        grid: {
+          display: false
+        },
+        ticks: {
+          display: false
+        }
       }
-    });
-  }
-
-  // Display in main menu when menu scrolls
-  let menuInnerContainer = document.getElementsByClassName('menu-inner'),
-    menuInnerShadow = document.getElementsByClassName('menu-inner-shadow')[0];
-  if (menuInnerContainer.length > 0 && menuInnerShadow) {
-    menuInnerContainer[0].addEventListener('ps-scroll-y', function () {
-      if (this.querySelector('.ps__thumb-y').offsetTop) {
-        menuInnerShadow.style.display = 'block';
-      } else {
-        menuInnerShadow.style.display = 'none';
+    },
+    elements: {
+      line: {
+        borderWidth: 1
+      },
+      point: {
+        radius: 4,
+        hitRadius: 10,
+        hoverRadius: 4
       }
-    });
-  }
-
-  // Init helpers & misc
-  // --------------------
-
-  // Init BS Tooltip
-  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-
-  // Accordion active class
-  const accordionActiveFunction = function (e) {
-    if (e.type == 'show.bs.collapse' || e.type == 'show.bs.collapse') {
-      e.target.closest('.accordion-item').classList.add('active');
-    } else {
-      e.target.closest('.accordion-item').classList.remove('active');
     }
-  };
-
-  const accordionTriggerList = [].slice.call(document.querySelectorAll('.accordion'));
-  const accordionList = accordionTriggerList.map(function (accordionTriggerEl) {
-    accordionTriggerEl.addEventListener('show.bs.collapse', accordionActiveFunction);
-    accordionTriggerEl.addEventListener('hide.bs.collapse', accordionActiveFunction);
-  });
-
-  // Auto update layout based on screen size
-  window.Helpers.setAutoUpdate(true);
-
-  // Toggle Password Visibility
-  window.Helpers.initPasswordToggle();
-
-  // Speech To Text
-  window.Helpers.initSpeechToText();
-
-  // Nav tabs animation
-  window.Helpers.navTabsAnimation();
-
-  // Manage menu expanded/collapsed with templateCustomizer & local storage
-  //------------------------------------------------------------------
-
-  // If current layout is horizontal OR current window screen is small (overlay menu) than return from here
-  if (window.Helpers.isSmallScreen()) {
-    return;
   }
+});
 
-  // If current layout is vertical and current window screen is > small
+// eslint-disable-next-line no-unused-vars
+const cardChart3 = new Chart(document.getElementById('card-chart3'), {
+  type: 'line',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgba(255,255,255,.2)',
+      borderColor: 'rgba(255,255,255,.55)',
+      data: [78, 81, 80, 45, 34, 12, 40],
+      fill: true
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        display: false
+      },
+      y: {
+        display: false
+      }
+    },
+    elements: {
+      line: {
+        borderWidth: 2,
+        tension: 0.4
+      },
+      point: {
+        radius: 0,
+        hitRadius: 10,
+        hoverRadius: 4
+      }
+    }
+  }
+});
 
-  // Auto update menu collapsed/expanded based on the themeConfig
-  window.Helpers.setCollapsed(true, false);
-})();
+// eslint-disable-next-line no-unused-vars
+const cardChart4 = new Chart(document.getElementById('card-chart4'), {
+  type: 'bar',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgba(255,255,255,.2)',
+      borderColor: 'rgba(255,255,255,.55)',
+      data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
+      barPercentage: 0.6
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawTicks: false
+        },
+        ticks: {
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          display: false,
+          drawBorder: false,
+          drawTicks: false
+        },
+        ticks: {
+          display: false
+        }
+      }
+    }
+  }
+});
+
+// eslint-disable-next-line no-unused-vars
+const mainChart = new Chart(document.getElementById('main-chart'), {
+  type: 'line',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--cui-info'), 10),
+      borderColor: coreui.Utils.getStyle('--cui-info'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 2,
+      data: [random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200)],
+      fill: true
+    }, {
+      label: 'My Second dataset',
+      borderColor: coreui.Utils.getStyle('--cui-success'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 2,
+      data: [random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200)]
+    }, {
+      label: 'My Third dataset',
+      borderColor: coreui.Utils.getStyle('--cui-danger'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 1,
+      borderDash: [8, 5],
+      data: [65, 65, 65, 65, 65, 65, 65]
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          drawOnChartArea: false
+        }
+      },
+      y: {
+        ticks: {
+          beginAtZero: true,
+          maxTicksLimit: 5,
+          stepSize: Math.ceil(250 / 5),
+          max: 250
+        }
+      }
+    },
+    elements: {
+      line: {
+        tension: 0.4
+      },
+      point: {
+        radius: 0,
+        hitRadius: 10,
+        hoverRadius: 4,
+        hoverBorderWidth: 3
+      }
+    }
+  }
+});
+//# sourceMappingURL=main.js.map

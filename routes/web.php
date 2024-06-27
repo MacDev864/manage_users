@@ -41,6 +41,8 @@ use App\Http\Controllers\user_interface\TabsPills;
 use App\Http\Controllers\user_interface\Toasts;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\user_interface\Typography;
+use App\Http\Controllers\vehicle\NavigationVehicleController;
+use App\Http\Controllers\vehicle\users\NavigationVehicleuserspageController;
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/', [Analytics::class, 'index'])->name('dashboard-main');
@@ -57,15 +59,17 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/pages/account-settings-connections', [NavigetionAccountSetting::class, 'settingsConnections'])->name(
     'pages-account-settings-connections'
   );
-  Route::get('/vehicle', function () {
-    return view('content.pages.pages-misc-under-maintenance');
-  });
+  Route::get('/vehicle/user', [NavigationVehicleController::class, 'getVehicleForUser'])->name('vehicle.user');
+  Route::get('/vehicle', [NavigationVehicleController::class, 'getVehicleForAdmin'])->name('vehicle.user');
+  // Route::get('/vehicle', function () {
+
+  // });
 });
 // authentication
 Route::get('/auth/login', [NavigationAuthController::class, 'login'])->name('login');
 Route::get('/auth/register', [NavigationAuthController::class, 'register'])->name('auth-register');
 Route::get('/auth/forgot-password', [NavigationAuthController::class, 'forgotpassword'])->name('auth-reset-password');
-Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
+// Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
 
 // Main Page Route
 

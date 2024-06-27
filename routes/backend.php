@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::group(
   [
     'prefix' => 'backend',
@@ -34,6 +35,8 @@ Route::group(
         Route::post('/user/create', [ProfileController::class, 'create'])->name('backend.user.create');
         Route::post('/user/update', [ProfileController::class, 'update'])->name('backend.user.update');
         Route::post('/user/delete', [ProfileController::class, 'delete'])->name('backend.user.delete');
+        Route::get('/getAll/users', [ProfileController::class, 'getUserById'])->name('backend.user.getAll');
+        //
         // /
       }
     );

@@ -4,11 +4,6 @@ const LOADER_BODY = `
 	<div class="mt-2">กำลังโหลดข้อมูล...</div>
 </div>
 `
-const LOADER = `
-<li class="ml-3 mt-2 mb-2 text-muted">
-                            กำลังโหลดข้อมูล...
-                        </li>
-`
 const BTN_TEXT_PROCESSING =`
 <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>กำลังบันทึกข้อมูล
 `

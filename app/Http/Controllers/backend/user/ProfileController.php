@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\backend\user;
 
 use App\Helpers\JsonResult;
@@ -19,7 +20,7 @@ class ProfileController extends Controller
 {
   public function __construct(Request $req)
   {
-      $this->body = $req->all();
+    $this->body = $req->all();
   }
   function getProfileById($id)
   {
@@ -27,7 +28,6 @@ class ProfileController extends Controller
       $user = Auth::user();
       $company_id = $user->company_id;
       $users = AuthService::getProfileById($id, $company_id);
-
       return JsonResult::success($users);
     } catch (\Throwable $th) {
       throw $th;
@@ -70,14 +70,14 @@ class ProfileController extends Controller
       $this->body['user_id'] = $user->id;
       $this->body['company_id'] = $company_id;
 
-      $validatorregister = Validators::validator($this->body, [
+      $validatorupdate = Validators::validator($this->body, [
         'name' => 'required|regex:/^[a-zA-Z0-9._]+$/',
         'lastname' => 'required|regex:/^[a-zA-Z0-9._]+$/',
         'username' => 'required|regex:/^[a-zA-Z0-9._]+$/',
         'email' => 'required|email',
       ]);
-      if ($validatorregister['success'] == false) {
-        return JsonResult::errors($validatorregister['data'], $validatorregister['message']);
+      if ($validatorupdate['success'] == false) {
+        return JsonResult::errors($validatorupdate['data'], $validatorupdate['message']);
       }
       $result = ProfileService::update($this->body);
       if ($result['success'] == false) {
@@ -93,8 +93,25 @@ class ProfileController extends Controller
     try {
       $user = Auth::user();
       $company_id = $user->company_id;
+      $this->body['user_id'] = $user->id;
+      $this->body['company_id'] = $company_id;
 
-      return JsonResult::success();
+      $result = ProfileService::delete($this->body);
+      if ($result['success'] == false) {
+        return JsonResult::errors(null, $result['message']);
+      }
+      return JsonResult::success($this->body);
+    } catch (\Throwable $th) {
+      throw $th;
+    }
+  }
+  function getUserById()
+  {
+    try {
+      $user = Auth::user();
+      $company_id = $user->company_id;
+      $users = AuthService::getUserById($company_id)->toArray();
+      return JsonResult::success($users);
     } catch (\Throwable $th) {
       throw $th;
     }

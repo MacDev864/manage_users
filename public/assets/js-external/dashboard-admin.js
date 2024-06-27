@@ -27,9 +27,18 @@ $(document).ready(function () {
     $('#basicModal').data('frmStatus', 'edit');
     fecthDataByid(id);
   });
-  // $('.btn-delete').on('click', function (event) {
+  $('.btn-delete').on('click', function (event) {
+    $('#basicModal').data('frmStatus', 'destory');
+    let id = $(this).data('id');
 
-  // });
+    let frmValue = {
+      id: id
+    };
+    let url = '/backend/user/delete';
+    let type = 'POST';
+
+    deleted(frmValue, url, type);
+  });
   $('.btn-submit').on('click', function (event) {
     let frmStatus = $('#basicModal').data('frmStatus');
     let frmValue = getFormValue();
@@ -45,11 +54,29 @@ $(document).ready(function () {
         url += '/user/update';
         update(frmValue, url, type);
         break;
+
       default:
         break;
     }
   });
   function create(frmValue, url, type) {
+    $.ajax({
+      type: type,
+      url: url,
+      data: frmValue,
+      dataType: 'json',
+      success: function (response) {
+        if (response.success == false) {
+          toastr.warning(response.message); // Show su
+        }
+        if (response.success == true) {
+          toastr.success(response.message); // Show su
+          window.location = '/';
+        }
+      }
+    });
+  }
+  function deleted(frmValue, url, type) {
     $.ajax({
       type: type,
       url: url,
@@ -83,6 +110,7 @@ $(document).ready(function () {
       }
     });
   }
+
   function getFormValue() {
     let datafrm = {
       id: $('#id').val(),
